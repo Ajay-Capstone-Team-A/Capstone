@@ -1,5 +1,7 @@
 using ECommerce.Data;
+using ECommerce.Models;
 using Microsoft.AspNetCore.DataProtection.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,9 @@ builder.Services.AddCors(options =>
 });
 
 var connectionString = builder.Configuration["ECommerce:ConnectionString"];
+builder.Services.AddDbContext<Context>(opt => opt.UseSqlServer(connectionString));
+builder.Services.AddScoped<IContext>(provider => provider.GetService<Context>());
+
 
 builder.Services.AddSingleton<IRepository>
     (sp => new SQLRepository(connectionString, sp.GetRequiredService<ILogger<SQLRepository>>()));

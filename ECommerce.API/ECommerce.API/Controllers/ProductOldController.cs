@@ -2,20 +2,19 @@
 using ECommerce.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductOldController : ControllerBase
     {
-        private  IContext _context;
-        private readonly ILogger<ProductController> _logger;
+        private readonly IRepository _repo;
+        private readonly ILogger<ProductOldController> _logger;
 
-        public ProductController(IContext context, ILogger<ProductController> logger)
+        public ProductOldController(IRepository repo, ILogger<ProductOldController> logger)
         {
-            this._context = context;
+            this._repo = repo;
             this._logger = logger;
         }
 
@@ -26,7 +25,7 @@ namespace ECommerce.API.Controllers
             _logger.LogInformation("api/product/{id} triggered");
             try
             {
-                return Ok(await _context.Product.FindAsync(id));
+                return Ok(await _repo.GetProductByIdAsync(id));
                 _logger.LogInformation("api/product/{id} completed successfully");
             }
             catch
@@ -42,7 +41,7 @@ namespace ECommerce.API.Controllers
             _logger.LogInformation("api/product triggered");
             try
             {
-                return Ok(_context.Product.ToList());
+                return Ok(await _repo.GetAllProductsAsync());
                 _logger.LogInformation("api/product completed successfully");
             }
             catch
@@ -59,15 +58,13 @@ namespace ECommerce.API.Controllers
             List<Product> products = new List<Product>();
             try
             {
-                foreach (ProductDTO item in purchaseProducts)
+                foreach(ProductDTO item in purchaseProducts)
                 {
-                    Product tmp = await _context.Product.FindAsync(item.id);
+                    Product tmp = await _repo.GetProductByIdAsync(item.id);
                     if ((tmp.ProductQuantity - item.quantity) >= 0)
                     {
-                        tmp.ProductQuantity = tmp.ProductQuantity - item.quantity;
-                        _context.Product.Update(tmp);
-                        _context.SaveAsync();
-                        products.Add(await _context.Product.FindAsync(item.id));
+                        await _repo.ReduceInventoryByIdAsync(item.id, item.quantity);
+                        products.Add(await _repo.GetProductByIdAsync(item.id));
                     }
                     else
                     {
