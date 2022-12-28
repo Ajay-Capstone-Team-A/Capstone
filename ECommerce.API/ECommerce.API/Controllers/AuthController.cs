@@ -23,8 +23,11 @@ namespace ECommerce.API.Controllers
             _logger.LogInformation("auth/register triggered");
             try
             {
-                return Ok();
-                //return Ok(await _context.User.AddAsync(newUser) );
+                await _context.User.AddAsync(newUser);
+                await _context.SaveAsync();
+                var t = _context.User.Where(x => x.UserPassword == newUser.UserPassword && x.UserEmail == newUser.UserEmail).FirstOrDefault<User>();
+                //User t = _context.User.Where(x => x.UserPassword == newUser.UserPassword && x.UserEmail == newUser.UserEmail).FirstOrDefault<User>();
+                return Ok(t.UserId);
                 _logger.LogInformation("auth/register completed successfully");
             }
             catch
@@ -41,9 +44,7 @@ namespace ECommerce.API.Controllers
             User t;
             try
             {
-                Console.WriteLine(LR.password + " " + LR.email);
-                Console.WriteLine(_context.User.Where(x => x.UserPassword == LR.password && x.UserEmail == LR.email).FirstOrDefault());
-               t =  _context.User.Where(x=>x.UserPassword == LR.password && x.UserEmail == LR.email).FirstOrDefault<User>();
+                 t =  _context.User.Where(x=>x.UserPassword == LR.password && x.UserEmail == LR.email).FirstOrDefault<User>();
                 _logger.LogInformation("auth/login completed successfully");
             }
             catch
