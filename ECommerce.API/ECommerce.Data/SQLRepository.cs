@@ -70,12 +70,12 @@ namespace ECommerce.Data
             Product tmp = new Product();
             while (reader.Read())
             {
-                tmp.id = id;
-                tmp.name = reader.GetString(1);
-                tmp.quantity = reader.GetInt32(2);
-                tmp.price = reader.GetDecimal(3);
-                tmp.description = reader.GetString(4);
-                tmp.image = reader.GetString(5);
+                tmp.ProductId = id;
+                tmp.ProductName = reader.GetString(1);
+                tmp.ProductQuantity = reader.GetInt32(2);
+                tmp.ProductPrice = reader.GetDecimal(3);
+                tmp.ProductDescription = reader.GetString(4);
+                tmp.ProductImage = reader.GetString(5);
             }
 
             await connection.CloseAsync();
@@ -167,10 +167,10 @@ namespace ECommerce.Data
 
             using SqlCommand cmd = new(cmdText, connection);
 
-            cmd.Parameters.AddWithValue("@UFN", newUser.firstName);
-            cmd.Parameters.AddWithValue("@ULN", newUser.lastName);
-            cmd.Parameters.AddWithValue("@UEM", newUser.email);
-            cmd.Parameters.AddWithValue("@UPW", newUser.password);
+            cmd.Parameters.AddWithValue("@UFN", newUser.UserFirstName);
+            cmd.Parameters.AddWithValue("@ULN", newUser.UserLastName);
+            cmd.Parameters.AddWithValue("@UEM", newUser.UserEmail);
+            cmd.Parameters.AddWithValue("@UPW", newUser.UserPassword);
 
             using SqlDataReader reader = await cmd.ExecuteReaderAsync();
             while (reader.Read())

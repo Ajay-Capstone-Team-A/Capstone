@@ -2,6 +2,7 @@
 <div class="container">
     <div class="row align-items-start">
        <div class="col" *ngFor="let product of allProducts">
+        <p>{{product}}</p>
             <app-product-card
                 class="cardListItem"
                 [productInfo]="product"
