@@ -26,7 +26,6 @@ namespace ECommerce.API.Controllers
                 await _context.User.AddAsync(newUser);
                 await _context.SaveAsync();
                 var t = _context.User.Where(x => x.UserPassword == newUser.UserPassword && x.UserEmail == newUser.UserEmail).FirstOrDefault<User>();
-                //User t = _context.User.Where(x => x.UserPassword == newUser.UserPassword && x.UserEmail == newUser.UserEmail).FirstOrDefault<User>();
                 return Ok(t.UserId);
                 _logger.LogInformation("auth/register completed successfully");
             }
