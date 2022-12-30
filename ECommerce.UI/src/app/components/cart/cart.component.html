@@ -6,14 +6,19 @@
         <th scope="col">Name</th>
         <th scope="col">Quantity</th>
         <th scope="col">Description</th>
+        <th scope="col"></th>
+        
       </tr>
     </thead>
     <tbody id="cart-table-body">
         <tr *ngFor="let product of products;">
             <td>{{product.product.productId}}</td>
             <td>{{product.product.productName}}</td>
-            <td>{{product.product.productQuantity}}</td>
+            <td>{{product.quantity}}</td>
             <td>{{product.product.productDescription}}</td>
+            <td><button class="btn btn-warning" (click)="removeItem(product.product.productName)">Remove All ({{product.quantity}})</button><td>
+            <td><button class="btn btn-warning" id= min (click)="removeItemOne(product.product.productName)">-</button>
+              <button class="btn btn-warning" id =plus (click)="AddItemOne(product.product.productName)">+</button><td>
         </tr>
     </tbody>
 </table>

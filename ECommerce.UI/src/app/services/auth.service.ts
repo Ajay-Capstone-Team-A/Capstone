@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-
+  
   authUrl: string = `${environment.baseUrl}/auth`;
   loggedIn: boolean = false;
 
