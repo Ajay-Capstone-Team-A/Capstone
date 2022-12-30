@@ -9,7 +9,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class AuthService {
-
+  
   authUrl: string = `${environment.baseUrl}/auth`;
   loggedIn: boolean = false;
 
