@@ -1,16 +1,56 @@
+import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { defer } from 'rxjs/internal/observable/defer';
 
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
-  let service: AuthService;
+  let spy: jasmine.SpyObj<HttpClient>;
+  let component: AuthService;
+    
+  
+  beforeEach(async () => {
+    component = new AuthService(spy);
+  });
+  
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthService);
+describe('AuthService metods', () => {
+  let spy: jasmine.SpyObj<HttpClient>;
+  let component: AuthService;
+    
+  
+  beforeEach(async () => {
+    spy = jasmine.createSpyObj(["post"]);
+    component = new AuthService(spy);
+  });
+  
+  it('should call login', () => {
+    
+    spy.post.and.returnValue(defer(()=>Promise.resolve("name")));
+
+    component.login("email","password");
+    expect(spy.post.calls.count()).toBe(1);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should call logout', () => {
+    
+    spy.post.and.returnValue(defer(()=>Promise.resolve("name")));
+
+    component.logout();
+    expect(spy.post.calls.count()).toBe(1);
   });
+
+  it('should call register', () => {
+    
+    spy.post.and.returnValue(defer(()=>Promise.resolve("name")));
+
+    component.register("","","","");
+    expect(spy.post.calls.count()).toBe(1);
+  });
+
+
 });
