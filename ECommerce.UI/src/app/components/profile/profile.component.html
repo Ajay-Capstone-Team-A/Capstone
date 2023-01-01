@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<div class="col border border-success border-3 rounded mx-5">
+    <form role="form">
+        <div class="form-group">
+        <!-- ! Read only -->
+        <label for="formControlInput" class="form-label">First Name</label>
+        <input
+            readonly
+            type="text"
+            class="form-control"
+            id="user-fname"
+            [value]="currentuser.userFirstName"
+            disabled
+        />
+        </div>
+
+        <!-- ! Read only -->
+        <div class="form-group">
+        <label for="user-lname"> Last Name </label>
+        <input
+            readonly
+            type="text"
+            class="form-control"
+            id="user-lname"
+            [value]="currentuser.userLastName"
+            disabled
+        />
+        </div>
+        <!-- ! Read only -->
+        <div class="form-group">
+        <label for="user-email">Email Address</label>
+        <input
+            readonly
+            type="text"
+            class="form-control"
+            id="user-email"
+            [value]="currentuser.userEmail"
+            disabled
+        />
+        </div>
+        <button class="btn btn-danger" [routerLink]="['/home']">Back</button>
+    </form>
+    </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { CurrentuserService } from '../../services/currentuser.service';
 
 @Component({
   selector: 'app-login',
@@ -16,15 +17,17 @@ export class LoginComponent implements OnInit {
   })
   
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private userService: CurrentuserService) { }
 
   ngOnInit(): void {
   }
   
   onSubmit(): void {
     this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe(
-      () => {
+      (data) => {
         this.authService.loggedIn=true;
+        this.userService.setUser(data);
+        
       },
       (err) => console.log(err),
       () => this.router.navigate(['home'])
