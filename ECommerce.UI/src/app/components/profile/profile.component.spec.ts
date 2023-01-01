@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CurrentuserService } from 'src/app/services/currentuser.service';
 
 import { ProfileComponent } from './profile.component';
 
@@ -20,4 +21,6 @@ describe('ProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });
+

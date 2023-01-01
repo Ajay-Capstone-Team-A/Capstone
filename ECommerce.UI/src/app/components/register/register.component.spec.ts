@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { defer } from 'rxjs/internal/observable/defer';
 import { Product } from 'src/app/models/product';
 import { AuthService } from 'src/app/services/auth.service';
@@ -41,5 +42,20 @@ describe('RegisterComponent methods', () => {
     spyRouter.navigate.and.callFake;
     component.onSubmit();
     expect(window.console.log).toHaveBeenCalled;
+  });
+
+  it('should call onSubmit, error', () => {
+    var product = new Product(1,"bob",2,"bob",1,"b");
+    let quantity = 1;
+    spyAuth.register.and.returnValue(throwError({status:404}));
+    spyRouter.navigate.and.callFake;
+    component.onSubmit();
+    expect(window.console.log).toHaveBeenCalled;
+  });
+
+  it('should call ngOnInit',()=>{
+    component.ngOnInit();
+    expect(component.ngOnInit).toHaveBeenCalled;
+
   });
 });
