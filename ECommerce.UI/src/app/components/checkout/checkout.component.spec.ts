@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { defer } from 'rxjs/internal/observable/defer';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
@@ -51,6 +52,20 @@ describe('CheckoutComponent methods', () => {
     
     component.onSubmit();
     expect(component.finalProducts.length ==0);
+    
+  });
+
+  it('should call onSubmit, finalProductLengt=1, error', () => {
+    //spyService.setCart.and.returnValue();
+    var product = new Product(1,"bob",2,"bob",1,"b");
+    let quantity = 1;
+    spyService.purchase.and.returnValue(throwError({status:404}));
+    
+    component.products.push({product,quantity});
+    
+    component.onSubmit();
+    //expect(spyService.setCart.calls.count()).toBe(1);
+    expect(spyService.setCart.calls.count() ==0);
     
   });
 

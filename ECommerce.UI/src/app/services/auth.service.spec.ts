@@ -24,7 +24,7 @@ describe('AuthService metods', () => {
     
   
   beforeEach(async () => {
-    spy = jasmine.createSpyObj(["post"]);
+    spy = jasmine.createSpyObj(["post","get"]);
     component = new AuthService(spy);
   });
   
@@ -50,6 +50,14 @@ describe('AuthService metods', () => {
 
     component.register("","","","");
     expect(spy.post.calls.count()).toBe(1);
+  });
+
+  it('should call getUser', () => {
+    
+    spy.get.and.returnValue(defer(()=>Promise.resolve("name")));
+
+    component.getUser(0);
+    expect(spy.get.calls.count()).toBe(1);
   });
 
 

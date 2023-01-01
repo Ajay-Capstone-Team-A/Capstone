@@ -66,6 +66,10 @@ describe('NavbarComponent methods', () => {
     spySub.unsubscribe.and.callFake;
     component.ngOnDestroy();
     expect(component.subscription.unsubscribe).toHaveBeenCalled;
-  
+  });
+
+  it('should call getProfile',()=>{
+    component.getProfile();
+    expect(component.getProfile).toHaveBeenCalled;
   });
 });
