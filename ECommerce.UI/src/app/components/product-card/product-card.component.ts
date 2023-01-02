@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductCardComponent implements OnInit{
 
   cartCount!: number;
+  quantity: number =1;
   products: {
     product: Product,
     quantity: number
@@ -32,40 +33,57 @@ export class ProductCardComponent implements OnInit{
     );
   }
 
-  addToCart(product: Product): void {
+  addToCart(product: Product, quantity:number): void {
+
+    if(quantity<=0){
+      alert("Error, must be greater than 0");
+    }
+    else{
     console.log(this.productInfo);
     let inCart = false;
 
     this.products.forEach(
       (element) => {
-        if(element.product == product){
-          ++element.quantity;
+        if(element.product.productId == product.productId){
+          if(product.productQuantity < element.quantity+quantity){
+            alert("Error, Not enough in stock to meet request");
+            inCart=true;
+            return
+          }
+          else{
+          element.quantity =element.quantity+quantity;
           let cart = {
-            cartCount: this.cartCount + 1,
+            cartCount: this.cartCount + quantity,
             products: this.products,
-            totalPrice: this.totalPrice + product.productPrice
+            totalPrice: this.totalPrice + product.productPrice*quantity
           };
           this.productService.setCart(cart);
           inCart=true;
           return;
         };
       }
+    }
     );
 
     if(inCart == false){
+      if(product.productQuantity <quantity){
+        alert("Error, Not enough in stock to meet request");
+      }
+      else{
       let newProduct = {
         product: product,
-        quantity: 1
+        quantity: quantity
       };
       this.products.push(newProduct);
       let cart = {
-        cartCount: this.cartCount + 1,
+        cartCount: this.cartCount + quantity,
         products: this.products,
-        totalPrice: this.totalPrice + product.productPrice
+        totalPrice: this.totalPrice + product.productPrice*quantity
       }
       this.productService.setCart(cart);
     }
-      
+  }
+  }
   }
 
   ngOnDestroy() {

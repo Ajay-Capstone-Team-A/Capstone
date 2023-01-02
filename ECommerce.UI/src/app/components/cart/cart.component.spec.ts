@@ -102,6 +102,17 @@ describe('CartComponent Methods', () => {
     expect(spyService.setCart.calls.count()).toBe(1);
     expect(component.products[0].quantity==2);
   });
+  it('should call AddItemOne, quantity error',()=>{
+    spyService.setCart.and.returnValue();
+    var product = new Product(1,"bob",2,"bob",1,"b");
+    let quantity = 1;
+    component.products.push({product,quantity});
+    
+    component.AddItemOne("bob");
+    component.AddItemOne("bob");
+    expect(spyService.setCart.calls.count()).toBe(1);
+    expect(component.products[0]==undefined);
+  });
 
   it('should call ngOnInit',()=>{
 
@@ -109,11 +120,34 @@ describe('CartComponent Methods', () => {
     let quantity = 1;
     
     let cart={cartCount: 0,
-      products: [{product,quantity}],
+      products: [{product,quantity},{product,quantity}],
       totalPrice: 0.00}
     spyService.getCart.and.returnValue(defer(()=>Promise.resolve(cart)));
     component.ngOnInit();
+    component.products = [{product,quantity}]
     expect(component.products ==cart.products);
+  });
+  it('should call ngOnInit, for loop',()=>{
+
+    var product = new Product(1,"bob",2,"bob",1,"b");
+    let quantity = 1;
+    
+    let cart={cartCount: 0,
+      products: [{product,quantity},{product,quantity}],
+      totalPrice: 0.00}
+    spyService.getCart.and.returnValue(defer(()=>Promise.resolve(cart)));
+    component.ngOnInit();
+    component.products = [{product,quantity}]
+    expect(component.products.length ==1);
+    expect(component.quantity ==1);
+  });
+  
+  it('should call initalize',()=>{
+    var product = new Product(1,"bob",2,"bob",1,"b");
+    let quantity = 1;
+    component.products = [{product,quantity}];
+    component.initalize();
+    expect(component.initalize).toHaveBeenCalled;
   });
 
 

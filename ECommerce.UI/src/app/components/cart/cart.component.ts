@@ -2,7 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { TemplateBindingParseResult } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { CheckboxControlValueAccessor } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ROUTER_INITIALIZER } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -13,6 +13,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class CartComponent implements OnInit {
 
+  quantity:number =0;
   products: {
     product: Product,
     quantity: number
@@ -37,6 +38,12 @@ export class CartComponent implements OnInit {
         this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
       }
     );
+    this.initalize();
+  }
+  initalize(){
+    for(let i=0;i<this.products.length;i++){
+      this.quantity = this.quantity + this.products[i].quantity;
+    }
   }
 
   emptyCart(): void {
@@ -61,14 +68,14 @@ export class CartComponent implements OnInit {
       else{
         locatedId=i;
         this.totalPrice = this.totalPrice-(this.products[locatedId].product.productPrice * this.products[locatedId].quantity);
-
+        this.quantity = this.quantity-this.products[locatedId].quantity
       }
     }
     this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
     this.products.length--;
 
     let cart = {
-      cartCount: this.products.length,
+      cartCount: this.quantity,
       products: this.tempProducts,
       totalPrice: this.totalPrice
     };
@@ -111,7 +118,7 @@ export class CartComponent implements OnInit {
     }
 
     let cart = {
-      cartCount: this.products.length,
+      cartCount: --this.quantity,
       products: this.tempProducts,
       totalPrice: this.totalPrice
     };
@@ -128,17 +135,21 @@ export class CartComponent implements OnInit {
         locatedId =i;
       }
     }
+    if(this.products[locatedId].product.productQuantity<=this.products[locatedId].quantity){
+      alert("Error, Not enough in stock to meet request");
+    }
+    else{
     this.totalPrice = this.totalPrice+(this.products[locatedId].product.productPrice);
     this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
 
     this.products[locatedId].quantity++;
 
     let cart = {
-      cartCount: this.products.length,
+      cartCount: ++this.quantity,
       products: this.products,
       totalPrice: this.totalPrice
     };
     this.productService.setCart(cart);
   }
-  
+}
 }
