@@ -33,7 +33,7 @@ export class AuthService {
     return this.http.get<any>(`${this.authUrl}/profile/` + userId.toString());
   }
 
-  putUser(user: User){
+  putUser(user: User): Observable<any>{
     return this.http.patch<any>(`${this.authUrl}/profile/` + user.userId.toString(), user);
   }
 }
