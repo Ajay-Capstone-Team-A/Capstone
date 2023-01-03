@@ -31,4 +31,8 @@ export class NavbarComponent implements OnInit{
     this.router.navigate(['login']);
   }
 
+  getProfile(){
+    console.log("Getting User Profile");
+  }
+
 }
