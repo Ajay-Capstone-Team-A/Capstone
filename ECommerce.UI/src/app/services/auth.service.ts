@@ -33,7 +33,10 @@ export class AuthService {
     return this.http.get<any>(`${this.authUrl}/profile/` + userId.toString());
   }
 
-  putUser(user: User): Observable<any>{
-    return this.http.patch<any>(`${this.authUrl}/profile/` + user.userId.toString(), user);
+  patchUser(user: User): Observable<any>{
+    return this.http.patch<any>(`${this.authUrl}/profileupdate/` + user.userId.toString(), user);
   }
+  // emailExist(user: User):Observable<any>{
+  //   return this.http.put<any>(`${this.authUrl}/profile/`, user.userId);
+  // }
 }

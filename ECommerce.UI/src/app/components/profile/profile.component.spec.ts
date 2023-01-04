@@ -27,24 +27,72 @@ describe('ProfileComponent methods', () => {
   let component: ProfileComponent;
 
   beforeEach(async () => {
-    spyAuth = jasmine.createSpyObj(["putUser"]);
+    spyAuth = jasmine.createSpyObj(["patchUser"]);
+    spyCurrentUser = jasmine.createSpyObj(["setUser"], ["getUser"]);
     component = new ProfileComponent(spyCurrentUser, spyAuth);
   });
 
   it('should call updateEmail', () => {
-    var user = new User(1, "First", "Last", "email@no.com", "password");
-    let newemail = "newemail@no.com";
-    spyAuth.putUser.and.returnValue(defer(()=>Promise.resolve({user, newemail})));
-    component.updateEmail();
+    var currentuser = new User(1, "First", "Last", "email@no.com", "password");
+    var newemail = "newemail@no.com";
+    component.currentuser = currentuser;
+    spyAuth.patchUser.and.returnValue(defer(()=>Promise.resolve({currentuser})));
+    component.updateEmail(component.currentuser.userEmail, newemail);
     expect(component.currentuser.userEmail==newemail);
   });
 
-  it('should call updateEmail, error', () => {
-    var user = new User(1, "First", "Last", "email@no.com", "password");
-    let newemail = "email@no.com";
-    spyAuth.putUser.and.returnValue(throwError({status:404}));
-    component.updateEmail();
-    expect!(component.currentuser.userEmail==newemail);
+  it('should call updateEmail, error email already exist', () => {
+    var currentuser = new User(1, "First", "Last", "email@no.com", "password");
+    var newemail = "admin";
+    component.currentuser = currentuser;
+    spyAuth.patchUser.and.returnValue(throwError({status:500}));
+    component.updateEmail(component.currentuser.userEmail, newemail);
+    expect(component.currentuser.userEmail!=newemail);
+  })
+
+  it('should call updatePassword', () => {
+    var currentuser = new User(1, "First", "Last", "email@no.com", "password");
+    var currpw = "password";
+    var newpw = "testing";
+    var newpwconf = "testing";
+    component.currentuser = currentuser;
+    spyAuth.patchUser.and.returnValue(defer(()=>Promise.resolve({currentuser})));
+    component.updatePassword(currpw, newpw, newpwconf);
+    expect(component.currentuser.userPassword==newpwconf);
+  });
+
+  it('should call updatePassword, error incorrect pw', () => {
+    var currentuser = new User(1, "First", "Last", "email@no.com", "password");
+    var currpw = "incorrect";
+    var newpw = "testing";
+    var newpwconf = "testing";
+    component.currentuser = currentuser;
+    spyAuth.patchUser.and.returnValue(defer(()=>Promise.resolve({currentuser})));
+    expect(component.updatePassword(currpw, newpw, newpwconf)).toBeUndefined();
+    
+  });
+
+  it('should call updatePassword, error new password do not match', () => {
+    var currentuser = new User(1, "First", "Last", "email@no.com", "password");
+    var currpw = "password";
+    var newpw = "testing";
+    var newpwconf = "tesing";
+    component.currentuser = currentuser;
+    spyAuth.patchUser.and.returnValue(defer(()=>Promise.resolve({currentuser})));
+    expect(component.updatePassword(currpw, newpw, newpwconf)).toBeUndefined();
+    
+  });
+
+  it('should call updatePassword, error password already exist', () => {
+    var currentuser = new User(1, "First", "Last", "email@no.com", "password");
+    var currpw = "password";
+    var newpw = "admin";
+    var newpwconf = "admin";
+    component.currentuser = currentuser;
+    spyAuth.patchUser.and.returnValue(throwError({status:500}));
+    component.updatePassword(currpw, newpw, newpwconf);
+    expect(component.currentuser.userPassword!=newpw);
+    
   });
 
 })

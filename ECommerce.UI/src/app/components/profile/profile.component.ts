@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { CurrentuserService } from '../../services/currentuser.service';
 import { AuthService } from '../../services/auth.service';
+import { noAuto } from '@fortawesome/fontawesome-svg-core';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -10,59 +14,64 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
-  newemail: string = "";
-  currpw: string = "";
-  newpw: string = "";
-  newpwconf: string = "";
-
-  Service: CurrentuserService = new CurrentuserService;
   currentuser!: User;
 
   constructor(private userService: CurrentuserService, private authService: AuthService) {
-    // this.Service = userService;
-    // this.currentuser = this.Service.getUser();
   }
 
   ngOnInit(): void {
-    this.Service = this.userService;
-    this.currentuser = this.Service.getUser();
+    this.currentuser = this.userService.getUser();
+
   }
 
-  updateEmail(){
+
+  updateEmail(currentemail: string, newemail: string){
     // Update the current user
-    this.currentuser.userEmail = this.newemail;
-    this.authService.putUser(this.currentuser).subscribe(
-      result => {console.log(`Result ${result}`)},
-      err => (console.log(`Error: ${err}`))
-    );
-    alert("Email has been updated!");
+    this.currentuser.userEmail = newemail;
+    this.authService.patchUser(this.currentuser).subscribe(
+      (response) => {
+        alert("Email has been updated")
+        this.userService.setUser(this.currentuser)
+        return
+      },
+      (error: HttpErrorResponse) => {
+        this.currentuser.userEmail = currentemail;
+        alert("This email already exist. Please enter a different email")
+        return
+    });
   }
 
-  updatePassword(){
+  updatePassword(currpw: any, newpw: any, newpwconf: any){
     // ! If the user wants to change anything, they better be remembering their password
-    if (this.currpw != this.currentuser.userPassword) {
+    if (currpw != this.currentuser.userPassword) {
       alert("The password that you entered was incorrect. Please try again");
       return;
     }
     
     // ! They got their own password right, so let's check if they're updating it
-    if (this.newpw){
-      if (this.newpw != this.newpwconf)
+    if (newpw){
+      if (newpw != newpwconf)
       {
         alert("Your new password and confirmation do not match. Please try again");
         return;
       }
-      this.currentuser.userPassword = this.newpw;
+      this.currentuser.userPassword = newpw;
     }
 
-    this.Service.setUser(this.currentuser);
     
-    //    So I just need to put now
-    this.authService.putUser(this.currentuser).subscribe(
-      result => {console.log(`Result ${result}`)},
-      err => (console.log(`Error: ${err}`))
-    );
-    alert("Password has been updated!");
+
+    this.authService.patchUser(this.currentuser).subscribe(
+      (response) => {
+        alert("Password has been updated!")
+        this.userService.setUser(this.currentuser)
+        return
+      },
+      (error: HttpErrorResponse) => {
+        alert("This password is currently being used. IDK why that is the case but it is. Just enter a different password I guess")
+        this.currentuser.userPassword = currpw
+        return
+      });
+    
   }
 
 }
