@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   register(firstName: string, lastName: string, email: string, password: string): Observable<any> {
-    const payload = {firstName: firstName, lastName: lastName, email: email, password: password};
+    const payload = {userFirstName: firstName, userLastName: lastName, userEmail: email, userPassword: password};
     return this.http.post<any>(`${this.authUrl}/register`, payload, {headers: environment.headers});
   }
 }
