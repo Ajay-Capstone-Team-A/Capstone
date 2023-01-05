@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { faUserInjured } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
@@ -31,4 +32,11 @@ export class AuthService {
   getUser(userId: number): Observable<any>{
     return this.http.get<any>(`${this.authUrl}/profile/` + userId.toString());
   }
+
+  patchUser(user: User): Observable<any>{
+    return this.http.patch<any>(`${this.authUrl}/profileupdate/` + user.userId.toString(), user);
+  }
+  // emailExist(user: User):Observable<any>{
+  //   return this.http.put<any>(`${this.authUrl}/profile/`, user.userId);
+  // }
 }
