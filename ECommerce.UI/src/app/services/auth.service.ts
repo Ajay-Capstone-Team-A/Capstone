@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { faUserInjured } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  
   authUrl: string = `${environment.baseUrl}/auth`;
   loggedIn: boolean = false;
 
@@ -27,9 +29,23 @@ export class AuthService {
     return this.http.post<any>(`${this.authUrl}/register`, payload, {headers: environment.headers});
   }
 
+
+  getUser(userId: number): Observable<any>{
+    return this.http.get<any>(`${this.authUrl}/profile/` + userId.toString());
+  }
+
+  patchUser(user: User): Observable<any>{
+    return this.http.patch<any>(`${this.authUrl}/profileupdate/` + user.userId.toString(), user);
+  }
+  // emailExist(user: User):Observable<any>{
+  //   return this.http.put<any>(`${this.authUrl}/profile/`, user.userId);
+  // }
+
+
   public checkEmail(email: string): Observable<boolean> {
     console.log("Calling checkEmail in auth service");
     console.log("the link is: "+ this.authUrl + "/findEmail/" + email)
     return this.http.get<boolean>(this.authUrl + "/findEmail/" + email);
   }
+
 }

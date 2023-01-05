@@ -7,3 +7,4 @@ export const environment = {
     'Access-Control-Allow-Origin': 'https://icy-wave-01c980310.2.azurestaticapps.net',
   },
 };
+
