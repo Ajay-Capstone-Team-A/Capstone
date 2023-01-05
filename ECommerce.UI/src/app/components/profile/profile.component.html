@@ -52,7 +52,7 @@
             <input #newpwconf type="password" class="form-control" id="user-conf-pw"/>
         </div>
         <button class="btn btn-success" (click)="updateEmail(currentemail.value, newemail.value)" type="submit">Update Email</button>
-        <button class="btn btn-success" (click)="updatePassword(currpw.value, newpw.value, newpwconf.value)" type="submit">Update Password</button>
+        <button class="btn btn-success" (click)="updatePassword(currpw.value, newpw.value, newpwconf.value)" type="submit">Reset Password</button>
         <button class="btn btn-danger" [routerLink]="['/home']">Back</button>
     </form>
     </div>
