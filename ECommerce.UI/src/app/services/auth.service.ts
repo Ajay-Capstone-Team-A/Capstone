@@ -28,7 +28,6 @@ export class AuthService {
     const payload = {userFirstName: firstName, userLastName: lastName, userEmail: email, userPassword: password};
     return this.http.post<any>(`${this.authUrl}/register`, payload, {headers: environment.headers});
   }
-  
   getUser(userId: number): Observable<any>{
     return this.http.get<any>(`${this.authUrl}/profile/` + userId.toString());
   }
