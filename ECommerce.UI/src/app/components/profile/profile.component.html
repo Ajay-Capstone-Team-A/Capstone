@@ -1,8 +1,7 @@
 <app-navbar></app-navbar>
-<div class="col border border-success border-3 rounded mx-5">
+<div class="col border border-basic border-3 rounded mx-5">
     <form role="form">
         <div class="form-group">
-        <!-- ! Read only -->
         <label for="formControlInput" class="form-label">First Name</label>
         <input
             readonly
@@ -14,7 +13,6 @@
         />
         </div>
 
-        <!-- ! Read only -->
         <div class="form-group">
         <label for="user-lname"> Last Name </label>
         <input
@@ -26,10 +24,9 @@
             disabled
         />
         </div>
-        <!-- ! Read only -->
         <div class="form-group">
         <label for="user-email">Email Address</label>
-        <input
+        <input #currentemail
             readonly
             type="text"
             class="form-control"
@@ -38,6 +35,24 @@
             disabled
         />
         </div>
+        <div class="form-group">
+            <label for="user-new-email">Update Current Email</label>
+            <input #newemail type="email" class="form-control" id="user-new-email" placeholder="Enter new Email"/>
+        </div>
+        <div class="form-group">
+            <label for="user-curr-pw">Current Password</label>
+            <input #currpw type="password" class="form-control" id="user-curr-pw"/>
+        </div>
+        <div class="form-group">
+            <label for="user-new-pw">Enter New Password&#63;</label>
+            <input #newpw type="password" class="form-control" id="user-new-pw"/>
+        </div>
+        <div class="form-group">
+            <label for="user-conf-pw">Confirm New Password&#63;</label>
+            <input #newpwconf type="password" class="form-control" id="user-conf-pw"/>
+        </div>
+        <button class="btn btn-success" (click)="updateEmail(currentemail.value, newemail.value)" type="submit">Update Email</button>
+        <button class="btn btn-success" (click)="updatePassword(currpw.value, newpw.value, newpwconf.value)" type="submit">Update Password</button>
         <button class="btn btn-danger" [routerLink]="['/home']">Back</button>
     </form>
     </div>
