@@ -9,6 +9,8 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class DisplayProductsComponent implements OnInit {
 
+  productSearchString: string = "";
+
   allProducts: Product[] = [];
 
   constructor(private productService: ProductService) { }
@@ -20,5 +22,10 @@ export class DisplayProductsComponent implements OnInit {
       () => console.log("Products Retrieved")
     );
   }
+
+    //Remove the table filters
+    removeFilters(): void {
+      this.productSearchString = '';
+    }  
 
 }

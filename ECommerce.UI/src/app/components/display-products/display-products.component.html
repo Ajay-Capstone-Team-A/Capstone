@@ -1,7 +1,22 @@
 <app-navbar></app-navbar>
 <div class="container">
+    <form>
+        <div class="filters">
+            <input
+                type="text"
+                class="form-control"
+                name="productSearchString"
+                placeholder="Search Products"
+                [(ngModel)]="productSearchString"
+            />
+
+            <button (click)="removeFilters()">Clear Filters</button>
+
+        </div>
+    </form>
+
     <div class="row align-items-start">
-       <div class="col" *ngFor="let product of allProducts">
+       <div class="col" *ngFor="let product of allProducts | filter : 'productName' : productSearchString ">
             <app-product-card
                 class="cardListItem"
                 [productInfo]="product"
