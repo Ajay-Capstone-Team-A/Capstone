@@ -12,12 +12,11 @@ import { RegisterComponent } from './register.component';
 describe('RegisterComponent', () => {
   let spyRouter: jasmine.SpyObj<Router>;
   let spyAuth: jasmine.SpyObj<AuthService>;
-  let spyService: jasmine.SpyObj<UserService>;
   let component: RegisterComponent;
     
   
   beforeEach(async () => {
-    component = new RegisterComponent(spyAuth,spyService,spyRouter);
+    component = new RegisterComponent(spyAuth,spyRouter);
   });
   
   it('should create', () => {
@@ -28,23 +27,20 @@ describe('RegisterComponent', () => {
 describe('RegisterComponent methods', () => {
   let spyRouter: jasmine.SpyObj<Router>;
   let spyAuth: jasmine.SpyObj<AuthService>;
-  let spyService: jasmine.SpyObj<UserService>;
   let component: RegisterComponent;
     
   
   beforeEach(async () => {
-    spyAuth = jasmine.createSpyObj(["register"]);
+    spyAuth = jasmine.createSpyObj(["register","checkEmail"]);
     spyRouter = jasmine.createSpyObj(["navigate"]);
-    spyService = jasmine.createSpyObj(["checkEmail","checkPassword"]);
     spyOn(window.console, "log");
-    component = new RegisterComponent(spyAuth,spyService,spyRouter);
+    component = new RegisterComponent(spyAuth,spyRouter);
   });
   
   it('should call onSubmit', () => {
     var user = new User(1,"b","b","b","b");
     let quantity = 1;
-    spyService.checkEmail.and.returnValue(defer(()=>Promise.resolve(true)));
-    spyService.checkPassword.and.returnValue(defer(()=>Promise.resolve(true)));
+    spyAuth.checkEmail.and.returnValue(defer(()=>Promise.resolve(true)));
     spyAuth.register.and.returnValue(defer(()=>Promise.resolve({user,quantity})));
     spyRouter.navigate.and.callFake;
     component.onSubmit();
@@ -54,8 +50,7 @@ describe('RegisterComponent methods', () => {
   it('should call onSubmit, error', () => {
     var product = new Product(1,"bob",2,"bob",1,"b");
     let quantity = 1;
-    spyService.checkEmail.and.returnValue(defer(()=>Promise.resolve(true)));
-    spyService.checkPassword.and.returnValue(defer(()=>Promise.resolve(true)));
+    spyAuth.checkEmail.and.returnValue(defer(()=>Promise.resolve(true)));
    
     spyAuth.register.and.returnValue(throwError({status:404}));
     spyRouter.navigate.and.callFake;
