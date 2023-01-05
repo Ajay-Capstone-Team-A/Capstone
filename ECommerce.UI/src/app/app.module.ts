@@ -13,6 +13,7 @@ import { DisplayProductsComponent } from './components/display-products/display-
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
+import { FilterPipe } from './components/display-products/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     CartComponent,
     CheckoutComponent,
     DisplayProductsComponent,
-    ProfileComponent
+    ProfileComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
