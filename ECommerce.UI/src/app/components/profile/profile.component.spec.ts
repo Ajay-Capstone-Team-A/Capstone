@@ -85,17 +85,5 @@ describe('ProfileComponent methods', () => {
     
   });
 
-  it('should call updatePassword, error password already exist', () => {
-    var currentuser = new User(1, "First", "Last", "email@no.com", "password");
-    var currpw = "password";
-    var newpw = "admin";
-    var newpwconf = "admin";
-    component.currentuser = currentuser;
-    spyAuth.patchUser.and.returnValue(throwError({status:500}));
-    component.updatePassword(currpw, newpw, newpwconf);
-    expect(component.currentuser.userPassword!=newpw);
-    
-  });
-
 })
 

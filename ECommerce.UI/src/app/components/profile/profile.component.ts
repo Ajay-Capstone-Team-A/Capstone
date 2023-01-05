@@ -67,8 +67,7 @@ export class ProfileComponent implements OnInit {
         return
       },
       (error: HttpErrorResponse) => {
-        alert("This password is currently being used. IDK why that is the case but it is. Just enter a different password I guess")
-        this.currentuser.userPassword = currpw
+        alert(error)
         return
       });
     
