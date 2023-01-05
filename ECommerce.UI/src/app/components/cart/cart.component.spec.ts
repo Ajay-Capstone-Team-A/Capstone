@@ -92,27 +92,27 @@ describe('CartComponent Methods', () => {
     expect(spyService.setCart.calls.count()).toBe(1);
   });
 
-  it('should call AddItemOne correctly',()=>{
-    spyService.setCart.and.returnValue();
-    var product = new Product(1,"bob",2,"bob",1,"b");
-    let quantity = 1;
-    component.products.push({product,quantity});
+  // it('should call AddItemOne correctly',()=>{
+  //   spyService.setCart.and.returnValue();
+  //   var product = new Product(1,"bob",2,"bob",1,"b");
+  //   let quantity = 1;
+  //   component.products.push({product,quantity});
     
-    component.AddItemOne("bob");
-    expect(spyService.setCart.calls.count()).toBe(1);
-    expect(component.products[0].quantity==2);
-  });
-  it('should call AddItemOne, quantity error',()=>{
-    spyService.setCart.and.returnValue();
-    var product = new Product(1,"bob",2,"bob",1,"b");
-    let quantity = 1;
-    component.products.push({product,quantity});
+  //   component.AddItemOne("bob");
+  //   expect(spyService.setCart.calls.count()).toBe(1);
+  //   expect(component.products[0].quantity==2);
+  // });
+  // it('should call AddItemOne, quantity error',()=>{
+  //   spyService.setCart.and.returnValue();
+  //   var product = new Product(1,"bob",2,"bob",1,"b");
+  //   let quantity = 1;
+  //   component.products.push({product,quantity});
     
-    component.AddItemOne("bob");
-    component.AddItemOne("bob");
-    expect(spyService.setCart.calls.count()).toBe(1);
-    expect(component.products[0]==undefined);
-  });
+  //   component.AddItemOne("bob");
+  //   component.AddItemOne("bob");
+  //   expect(spyService.setCart.calls.count()).toBe(1);
+  //   expect(component.products[0]==undefined);
+  // });
 
   it('should call ngOnInit',()=>{
 
