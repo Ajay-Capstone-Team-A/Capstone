@@ -12,11 +12,5 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public checkEmail(email: string): Observable<boolean> {
-    return this.http.get<boolean>(environment.baseUrl + this.userUrl + "/findEmail/" + email);
-  }
 
-  public checkPassword(password: string): Observable<boolean> {
-    return this.http.get<boolean>(environment.baseUrl + this.userUrl + "/findPassword/" + password);
-  }
 }

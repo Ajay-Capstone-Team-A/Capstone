@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-register',
@@ -19,21 +19,20 @@ export class RegisterComponent implements OnInit {
   })
   
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   emailTaken = false;
-  passwordTaken = false;
+
 
   ngOnInit(): void {
   }
   
   onSubmit(): void {
     this.checkEmail();
-    this.checkPassword();
 
     setTimeout(() => {
-      if (this.emailTaken == false && this.passwordTaken == false && !this.registerForm.invalid) {
-        console.log("register time");
+      if (this.emailTaken == false && !this.registerForm.invalid) {
+        console.log("Registration service starting");
         this.authService.register(this.registerForm.get('fname')?.value,
           this.registerForm.get('lname')?.value,
           this.registerForm.get('email')?.value,
@@ -48,7 +47,7 @@ export class RegisterComponent implements OnInit {
           );
       }
     }
-    , 2000);
+    , 2500);
 
 
     /*
@@ -75,7 +74,7 @@ export class RegisterComponent implements OnInit {
 
 
   public  checkEmail() {
-    this.userService.checkEmail(this.registerForm.get('email')?.value).subscribe(
+    this.authService.checkEmail(this.registerForm.get('email')?.value).subscribe(
       (data) => {
         console.log("Is email taken? " + data)
         this.emailTaken = data;
@@ -83,14 +82,7 @@ export class RegisterComponent implements OnInit {
       (err) => { console.log(err) })
   }
 
-  public  checkPassword() {
-    this.userService.checkPassword(this.registerForm.get('password')?.value).subscribe(
-      (data) => {
-        console.log("Is password taken? " + data)
-        this.passwordTaken = data;
-      },
-      (err) => { console.log(err) })
-  }
+
 
   
 

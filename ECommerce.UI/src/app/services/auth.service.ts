@@ -28,15 +28,10 @@ export class AuthService {
     const payload = {userFirstName: firstName, userLastName: lastName, userEmail: email, userPassword: password};
     return this.http.post<any>(`${this.authUrl}/register`, payload, {headers: environment.headers});
   }
-
-  getUser(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.authUrl}/profile/` + userId.toString());
+  
+  public checkEmail(email: string): Observable<boolean> {
+    console.log("Calling checkEmail in auth service");
+    console.log("the link is: "+ this.authUrl + "/findEmail/" + email)
+    return this.http.get<boolean>(this.authUrl + "/findEmail/" + email);
   }
-
-  patchUser(user: User): Observable<any>{
-    return this.http.patch<any>(`${this.authUrl}/profileupdate/` + user.userId.toString(), user);
-  }
-  // emailExist(user: User):Observable<any>{
-  //   return this.http.put<any>(`${this.authUrl}/profile/`, user.userId);
-  // }
 }
