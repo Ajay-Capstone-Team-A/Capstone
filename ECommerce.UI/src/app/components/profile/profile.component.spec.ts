@@ -5,6 +5,7 @@ import { throwError } from 'rxjs';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
 
+
 import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
@@ -20,6 +21,7 @@ describe('ProfileComponent', () => {
   });
 
 });
+
 
 describe('ProfileComponent methods', () => {
   let spyCurrentUser: jasmine.SpyObj<CurrentuserService>;
