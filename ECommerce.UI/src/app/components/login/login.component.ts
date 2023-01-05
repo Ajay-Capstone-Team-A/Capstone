@@ -11,6 +11,8 @@ import { CurrentuserService } from '../../services/currentuser.service';
 })
 export class LoginComponent implements OnInit {
 
+  wrongLogin = false;
+
   loginForm = new UntypedFormGroup({
     email: new UntypedFormControl(''),
     password: new UntypedFormControl('')
@@ -24,13 +26,15 @@ export class LoginComponent implements OnInit {
   
   onSubmit(): void {
     this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe(
-      (data) => {
-        this.authService.loggedIn=true;
-        this.userService.setUser(data);
-        
+      () => {
+        this.authService.loggedIn = true;
+        this.router.navigate(['home']);
       },
-      (err) => console.log(err),
-      () => this.router.navigate(['home'])
+      (err) => {
+        console.log(err);
+        this.wrongLogin = true;
+      },
+      //() => this.router.navigate(['home'])
     );
   }
 

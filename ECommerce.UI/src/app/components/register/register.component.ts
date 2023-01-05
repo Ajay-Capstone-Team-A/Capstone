@@ -30,24 +30,6 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     this.checkEmail();
 
-    setTimeout(() => {
-      if (this.emailTaken == false && !this.registerForm.invalid) {
-        console.log("Registration service starting");
-        this.authService.register(this.registerForm.get('fname')?.value,
-          this.registerForm.get('lname')?.value,
-          this.registerForm.get('email')?.value,
-          this.registerForm.get('password')?.value).subscribe(
-            () => {
-              console.log("New user registered")
-              this.router.navigate(['login'])
-            }
-            ,
-            (err) => console.log(err),
-            //() => this.router.navigate(['login'])
-          );
-      }
-    }
-    , 2500);
 
 
     /*
@@ -78,6 +60,21 @@ export class RegisterComponent implements OnInit {
       (data) => {
         console.log("Is email taken? " + data)
         this.emailTaken = data;
+        if (this.emailTaken == false && !this.registerForm.invalid) {
+          console.log("Registration service starting");
+          this.authService.register(this.registerForm.get('fname')?.value,
+            this.registerForm.get('lname')?.value,
+            this.registerForm.get('email')?.value,
+            this.registerForm.get('password')?.value).subscribe(
+              () => {
+                console.log("New user registered")
+                this.router.navigate(['login'])
+              }
+              ,
+              (err) => console.log(err),
+              //() => this.router.navigate(['login'])
+            );
+        }
       },
       (err) => { console.log(err) })
   }
