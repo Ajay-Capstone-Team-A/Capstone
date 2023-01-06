@@ -8,7 +8,7 @@
     <div class="form-group">
       <label for="exampleInputPassword1">Password</label>
       <input type="password" class="form-control" formControlName="password" id="exampleInputPassword1" placeholder="Password">
-      <div *ngIf="wrongLogin">
+      <div *ngIf="wrongLogin" class="error">
         Invalid Email or password
       </div>
     </div>
