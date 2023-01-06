@@ -50,4 +50,8 @@ export class ProductService {
     const payload = JSON.stringify(products);
     return this.http.patch<any>(environment.baseUrl+this.productUrl, payload, {headers: environment.headers, withCredentials: environment.withCredentials})
   }
+
+  public getReviewAverage(id: number): Observable<number> {
+    return this.http.get<number>(environment.baseUrl + this.productUrl + "/getReviewAverage/" + id);
+  }
 }

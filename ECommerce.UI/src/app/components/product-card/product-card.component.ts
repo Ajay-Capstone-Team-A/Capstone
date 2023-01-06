@@ -11,7 +11,8 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductCardComponent implements OnInit{
 
   cartCount!: number;
-  quantity: number =1;
+  quantity: number = 1;
+  rating!: number;
   products: {
     product: Product,
     quantity: number
@@ -31,6 +32,19 @@ export class ProductCardComponent implements OnInit{
         this.totalPrice = cart.totalPrice;
       }
     );
+    this.productService.getReviewAverage(this.productInfo.productId).subscribe(
+      (data) => {
+        this.rating = data;
+      }
+    )
+  }
+
+  getAvg() {
+    this.productService.getReviewAverage(this.productInfo.productId).subscribe(
+      (data) => {
+        this.rating = data;
+      }
+    )
   }
 
   addToCart(product: Product, quantity:number): void {
