@@ -11,6 +11,8 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
 })
 export class CheckoutComponent implements OnInit {
 
+  badExpiryDate = false;
+
   products: {
     product: Product,
     quantity: number
@@ -22,9 +24,9 @@ export class CheckoutComponent implements OnInit {
   checkoutForm = new UntypedFormGroup({
     cardName: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     cardNumber: new UntypedFormControl('', [Validators.required, Validators.pattern("^[0-9]{16}$")]),
-    expiry: new UntypedFormControl('', [Validators.required]),
+    expiry: new UntypedFormControl('', [Validators.required, Validators.pattern("^[0-9]{4}$")]),
     cvv: new UntypedFormControl('', [Validators.required,Validators.pattern("^[0-9]{3}$")]),
-    address: new UntypedFormControl('', [Validators.required]),
+    address: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
     city: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     state: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     zipCode: new UntypedFormControl('', [Validators.required, Validators.pattern("^[0-9]{5}$")]),
@@ -46,7 +48,8 @@ export class CheckoutComponent implements OnInit {
 
 
   onSubmit(): void {
-    if (!this.checkoutForm.invalid) {
+    this.validateExpiry(this.checkoutForm.get('expiry')?.value)
+    if (!this.checkoutForm.invalid && this.badExpiryDate == false) {
       this.products.forEach(
         (element) => {
           const id = element.product.productId;
@@ -113,20 +116,22 @@ export class CheckoutComponent implements OnInit {
     return this.checkoutForm.get('zipCode');
   }
 
-  /*
-  validateExpiry(input: string) {
-  // ensure basic format is correct
-    if (input.match(/^(0[1-9]|1[0-2])\/?([0-9]{4})$/)) {
-    const { 0: month, 1: year } = input.split("/");
-
-    // get midnight of first day of the next month
-    const expiry = new Date(2000 + year, month);
-    console.log("HWERE");
-    const current = new Date();
-
-    return expiry.getTime() > current.getTime();
-
-  } else return false;
-}
-  */
+  validateExpiry(input: any) {
+    if (input) {
+      let month = Number(String(input).slice(0, 2));
+      let year = Number(String(input).slice(-2));
+      console.log("year is" + year);
+      console.log("month is " + month);
+      const expiry = new Date(2000 + year, month-1);
+      const current = new Date();
+      console.log("expiry time " + expiry.getTime());
+      console.log("expiry date " + expiry);
+      console.log("current time " + current.getTime());
+      console.log("current date " + current);
+      if (expiry.getTime() < current.getTime())
+        this.badExpiryDate = true;
+      else this.badExpiryDate = false;
+      console.log("flag is "+this.badExpiryDate);
+    }
+  }
 }
