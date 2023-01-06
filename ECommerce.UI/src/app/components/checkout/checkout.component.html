@@ -1,101 +1,125 @@
 <app-navbar></app-navbar>
 
 <div class="container mt-5 px-5">
-
+  <form id="checkout-form" [formGroup]="checkoutForm">
     <div class="mb-4">
 
-        <h2>Confirm order and pay</h2>
-    <span>please make the payment, after that you can enjoy all the features and benefits.</span>
-        
+      <h2>Confirm order and pay</h2>
+      <span>please make the payment, after that you can enjoy all the features and benefits.</span>
+
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <div class="card p-3">
+      <div class="col-md-8">
 
-                <h6 class="text-uppercase">Payment details</h6>
-                <div class="inputbox mt-3"> <input type="text" name="name" class="form-control" required="required"> <span>Name on card</span> </div>
+        <div class="card p-3">
+          <h6 class="text-uppercase">Payment details</h6>
+          <div class="inputbox mt-3"> <input type="text" name="name" formControlName="cardName" class="form-control" required="required"> <span>Name on card</span> </div>
+          <div *ngIf="cardName && cardName.dirty && checkoutForm.controls['cardName'].errors?.pattern" class=" error">
+               Please only use letters in your name
+          </div>
+          <div class="row">
 
-                <div class="row">
+            <div class="col-md-6">
 
-                    <div class="col-md-6">
-
-                        <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control" required="required"> <i class="fa fa-credit-card"></i> <span>Card Number</span> 
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex flex-row">
-                            <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control" required="required"> <span>Expiry</span> </div>
-
-                        <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control" required="required"> <span>CVV</span> </div>
-                        </div>                        
-                    </div>                   
-                </div>
-
-                <div class="mt-4 mb-4">
-
-                    <h6 class="text-uppercase">Billing Address</h6>
-                    <div class="row mt-3">
-
-                        <div class="col-md-6">
-
-                            <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control" required="required"> <span>Street Address</span> </div>
-                            
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control" required="required"> <span>City</span> </div>
-                            
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-
-                        <div class="col-md-6">
-
-                            <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control" required="required"> <span>State/Province</span> </div>        
-
-                        </div>
-                        <div class="col-md-6">
-
-                            <div class="inputbox mt-3 mr-2"> <input type="text" name="name" class="form-control" required="required"> <span>Zip code</span> </div>              
-
-                        </div>                      
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 mb-4 d-flex justify-content-between">
-
-                <button class="btn btn-danger" [routerLink]="['/cart']">Back to Cart</button>
-
-                <button class="btn btn-success px-3" (click)="onSubmit();">Pay ${{totalPrice}}</button>
+              <div class="inputbox mt-3 mr-2">
+                <input type="text" name="name" class="form-control" formControlName="cardNumber" required="required"> <i class="fa fa-credit-card"></i> <span>Card Number</span>
+                <div *ngIf="cardNumber && cardNumber.dirty && checkoutForm.controls['cardNumber'].errors?.pattern" class=" error">Please enter a valid credit card number (16 digits numbers only)</div>
+              </div>
 
             </div>
+            <div class="col-md-6">
+              <div class="d-flex flex-row">
+                <div class="inputbox mt-3 mr-2"> <input type="text" name="name" formControlName="expiry" class="form-control" required="required"> <span>Expiry</span> </div>
+
+
+                <div class="inputbox mt-3 mr-2">
+                  <input type="text" name="name" formControlName="cvv" class="form-control" required="required"> <span>CVV</span>
+                  <div *ngIf="cvv && cvv.dirty && checkoutForm.controls['cvv'].errors?.pattern" class=" error">Please enter a valid CVV (3 digits numbers only)</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 mb-4">
+
+            <h6 class="text-uppercase">Billing Address</h6>
+            <div class="row mt-3">
+
+              <div class="col-md-6">
+
+                <div class="inputbox mt-3 mr-2"> <input type="text" name="name" formControlName="address" class="form-control" required="required"> <span>Street Address</span> </div>
+                <div *ngIf="address && address.dirty && checkoutForm.controls['address'].errors?.pattern" class=" error">Please enter a valid address</div>
+              </div>
+
+
+              <div class="col-md-6">
+
+                <div class="inputbox mt-3 mr-2">
+                  <input type="text" name="name" formControlName="city" class="form-control" required="required"> <span>City</span>
+                  <div *ngIf="city && city.dirty && checkoutForm.controls['city'].errors?.pattern" class=" error">
+                    Please only use letters in city field
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row mt-2">
+
+              <div class="col-md-6">
+
+                <div class="inputbox mt-3 mr-2"> <input type="text" name="name" formControlName="state" class="form-control" required="required"> <span>State/Province</span> </div>
+
+
+                <div *ngIf="state && state.dirty && checkoutForm.controls['state'].errors?.pattern" class="error">
+                  Please only use letters in state field
+                </div>
+              </div>
+              <div class="col-md-6">
+
+                <div class="inputbox mt-3 mr-2"> <input type="text" name="name" formControlName="zipCode" class="form-control" required="required"> <span>Zip code</span> </div>
+
+                <div *ngIf="zipCode && zipCode.dirty && checkoutForm.controls['zipCode'].errors?.pattern" class="error">
+                  Please enter a valid zipcode (5 digit numbers only)
+                </div>
+              </div>
+
+            </div>
+          </div>
 
         </div>
 
-        <div class="col-md-4">
+        <div class="mt-4 mb-4 d-flex justify-content-between">
 
-            <div class="card card-blue p-3 text-white mb-3">
+          <button class="btn btn-danger" [routerLink]="['/cart']">Back to Cart</button>
 
-            <span>You have to pay</span>
-                <div class="d-flex flex-row align-items-end mb-3">
-                    <h1 class="mb-0 yellow">${{totalPrice}}</h1>
-                </div>
+          <button class="btn btn-success px-3" (click)="onSubmit();">Pay ${{totalPrice}}</button>
 
-                <div class="hightlight">
-
-                    <span>100% Guaranteed Satisfaction!</span>
-                    
-
-                </div>
-                
-            </div>
-            
         </div>
         
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="card card-blue p-3 text-white mb-3">
+
+          <span>You have to pay</span>
+          <div class="d-flex flex-row align-items-end mb-3">
+            <h1 class="mb-0 yellow">${{totalPrice}}</h1>
+          </div>
+
+          <div class="hightlight">
+
+            <span>100% Guaranteed Satisfaction!</span>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
+    </form>
 </div>
