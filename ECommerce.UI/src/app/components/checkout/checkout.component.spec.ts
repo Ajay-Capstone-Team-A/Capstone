@@ -35,7 +35,6 @@ describe('CheckoutComponent methods', () => {
   });
   
   it('should call onSubmit, finalProductLengt=1', () => {
-    //spyService.setCart.and.returnValue();
     var product = new Product(1,"bob",2,"bob",1,"b");
     let quantity = 1;
     spyService.purchase.and.returnValue(defer(()=>Promise.resolve({product,quantity})));
@@ -43,7 +42,6 @@ describe('CheckoutComponent methods', () => {
     component.products.push({product,quantity});
     
     component.onSubmit();
-    //expect(spyService.setCart.calls.count()).toBe(1);
     expect(component.finalProducts.length ==1);
     
   });
@@ -56,7 +54,6 @@ describe('CheckoutComponent methods', () => {
   });
 
   it('should call onSubmit, finalProductLengt=1, error', () => {
-    //spyService.setCart.and.returnValue();
     var product = new Product(1,"bob",2,"bob",1,"b");
     let quantity = 1;
     spyService.purchase.and.returnValue(throwError({status:404}));
@@ -64,7 +61,6 @@ describe('CheckoutComponent methods', () => {
     component.products.push({product,quantity});
     
     component.onSubmit();
-    //expect(spyService.setCart.calls.count()).toBe(1);
     expect(spyService.setCart.calls.count() ==0);
     
   });
