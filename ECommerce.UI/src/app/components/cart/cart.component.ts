@@ -125,32 +125,4 @@ export class CartComponent implements OnInit {
     };
     this.productService.setCart(cart);
   }
-
-  
-//   AddItemOne(name:string){
-//     let j=0;
-    
-//     var locatedId=-1;
-//     for(let i=0; i<this.products.length;i++){
-//       if(this.products[i].product.productName==name){
-//         locatedId =i;
-//       }
-//     }
-//     if(this.products[locatedId].product.productQuantity<=this.products[locatedId].quantity){
-//       alert("Error, Not enough in stock to meet request");
-//     }
-//     else{
-//     this.totalPrice = this.totalPrice+(this.products[locatedId].product.productPrice);
-//     this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
-
-//     this.products[locatedId].quantity++;
-
-//     let cart = {
-//       cartCount: ++this.quantity,
-//       products: this.products,
-//       totalPrice: this.totalPrice
-//     };
-//     this.productService.setCart(cart);
-//   }
-// }
 }
