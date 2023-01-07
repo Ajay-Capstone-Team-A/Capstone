@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
         console.log(err);
         this.wrongLogin = true;
       },
-      //() => this.router.navigate(['home'])
     );
   }
 
