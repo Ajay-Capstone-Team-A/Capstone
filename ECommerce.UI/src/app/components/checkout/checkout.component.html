@@ -43,8 +43,11 @@
                   <div *ngIf="expiry && expiry.dirty && checkoutForm.controls['expiry'].errors?.pattern" class=" error">
                     Please enter credit card expiry in correct format (MMYY)
                   </div>
-                  <div *ngIf="badExpiryDate" class="error">
+                  <div *ngIf="cardExpired" class="error">
                     Card has already expired
+                  </div>
+                  <div *ngIf="badMonthInput" class="error">
+                    Month should be between 1 - 12
                   </div>
                   <div *ngIf="checkoutForm.controls['expiry'].errors?.required && (expiry?.dirty || expiry?.touched)" class=" error">
                     This field is required

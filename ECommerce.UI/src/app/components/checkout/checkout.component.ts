@@ -11,7 +11,8 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
 })
 export class CheckoutComponent implements OnInit {
 
-  badExpiryDate = false;
+  cardExpired = false;
+  badMonthInput = false;
 
   products: {
     product: Product,
@@ -49,7 +50,7 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit(): void {
     this.validateExpiry(this.checkoutForm.get('expiry')?.value)
-    if (!this.checkoutForm.invalid && this.badExpiryDate == false) {
+    if (!this.checkoutForm.invalid && this.cardExpired == false && this.badMonthInput == false) {
       this.products.forEach(
         (element) => {
           const id = element.product.productId;
@@ -120,18 +121,19 @@ export class CheckoutComponent implements OnInit {
     if (input) {
       let month = Number(String(input).slice(0, 2));
       let year = Number(String(input).slice(-2));
-      console.log("year is" + year);
-      console.log("month is " + month);
+
+      if (month > 12 || month <= 0)
+        this.badMonthInput = true;
+      else
+        this.badMonthInput = false;
+
       const expiry = new Date(2000 + year, month-1);
       const current = new Date();
-      console.log("expiry time " + expiry.getTime());
-      console.log("expiry date " + expiry);
-      console.log("current time " + current.getTime());
-      console.log("current date " + current);
+
       if (expiry.getTime() < current.getTime())
-        this.badExpiryDate = true;
-      else this.badExpiryDate = false;
-      console.log("flag is "+this.badExpiryDate);
+        this.cardExpired = true;
+      else this.cardExpired = false;
+
     }
   }
 }
