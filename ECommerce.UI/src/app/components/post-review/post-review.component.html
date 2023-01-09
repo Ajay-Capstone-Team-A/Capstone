@@ -1,0 +1,8 @@
+
+<form [formGroup]="postReviewForm" (ngSubmit)="onSubmit();">
+  <label>Rating: </label>
+  <input formControlName="rating" type="number" />
+  <label>Comments: </label>
+  <input formControlName="comment" type="text"/>
+  <button type="submit">Submit</button>
+</form>

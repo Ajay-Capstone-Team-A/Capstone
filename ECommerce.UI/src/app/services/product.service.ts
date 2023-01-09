@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { environment } from 'src/environments/environment';
+import { reviewDTO } from '../models/reviewDTO';
 
 interface Cart {
   cartCount: number;
@@ -53,5 +54,9 @@ export class ProductService {
 
   public getReviewAverage(id: number): Observable<number> {
     return this.http.get<number>(environment.baseUrl + this.productUrl + "/getReviewAverage/" + id);
+  }
+
+  public getReviews(id: number): Observable<reviewDTO[]> {
+    return this.http.get<reviewDTO[]>(environment.baseUrl + this.productUrl + '/getReviews/' + id);
   }
 }

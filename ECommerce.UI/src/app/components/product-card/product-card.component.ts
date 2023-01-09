@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
+import { reviewDTO } from '../../models/reviewDTO';
 
 @Component({
   selector: 'app-product-card',
@@ -10,6 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductCardComponent implements OnInit{
 
+  reviews!: reviewDTO[];
   cartCount!: number;
   quantity: number = 1;
   rating!: number;
@@ -36,16 +38,13 @@ export class ProductCardComponent implements OnInit{
       (data) => {
         this.rating = data;
       }
-    )
+    );
+    this.productService.getReviews(this.productInfo.productId).subscribe(
+      (data) => {
+        this.reviews = data;
+      });
   }
 
-  getAvg() {
-    this.productService.getReviewAverage(this.productInfo.productId).subscribe(
-      (data) => {
-        this.rating = data;
-      }
-    )
-  }
 
   addToCart(product: Product, quantity:number): void {
 
@@ -104,4 +103,7 @@ export class ProductCardComponent implements OnInit{
     this.subscription.unsubscribe();
   }
 
+  addReview(input: string) {
+    this.ngOnInit();
+  }
 }
