@@ -5,7 +5,7 @@
   <div *ngIf="postReviewForm.controls['rating'].errors?.required  && (rating?.dirty || rating?.touched)" class="error">
     Please provide a rating
   </div>
-  <div *ngIf="ratingFlag" class="error">
+  <div *ngIf="postReviewForm.controls['rating'].errors?.pattern" class="error">
     Rating should be 1-5
   </div>
   <label>Comments: </label>
