@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { defer } from 'rxjs/internal/observable/defer';
+import { User } from '../models/user';
 
 import { AuthService } from './auth.service';
 
@@ -24,7 +25,7 @@ describe('AuthService metods', () => {
     
   
   beforeEach(async () => {
-    spy = jasmine.createSpyObj(["post","get"]);
+    spy = jasmine.createSpyObj(["post","get","patch"]);
     component = new AuthService(spy);
   });
   
@@ -59,6 +60,18 @@ describe('AuthService metods', () => {
     component.getUser(0);
     expect(spy.get.calls.count()).toBe(1);
   });
+  it('should call patchUser',()=>{
+      spy.patch.and.returnValue(defer(()=>Promise.resolve("name")));
+      let user = new User(1,'','','','');
+      component.patchUser(user);
+      expect(spy.patch.calls.count()).toBe(1);
 
+  });
+  it('shoulc call checkEmail',()=>{
+    spy.get.and.returnValue(defer(()=>Promise.resolve("name")))
+    component.checkEmail("name");
+    expect(spy.get.calls.count()).toBe(1);
+
+  });
 
 });
