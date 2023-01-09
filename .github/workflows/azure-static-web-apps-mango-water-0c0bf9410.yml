@@ -35,7 +35,7 @@ jobs:
           NPM_CONFIG_LEGACY_PEER_DEPS: true
 
       - name: Test
-        run: ng test --no-watch --karma-config karma.pipeline.conf.js
+        run: ng test --browsers=ChromeHeadless --watch=false --code-coverage
 
 
   close_pull_request_job:
