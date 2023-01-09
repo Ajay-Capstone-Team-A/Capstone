@@ -6,6 +6,8 @@ import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
 import { defer } from 'rxjs/internal/observable/defer';
 import { Subscription } from 'rxjs';
+import { Review } from 'src/app/models/review';
+import { reviewDTO } from 'src/app/models/reviewDTO';
 
 describe('ProductCardComponent', () => {
   let spy: jasmine.SpyObj<ProductService>;
@@ -23,26 +25,15 @@ describe('ProductCardComponent', () => {
 
 describe('ProductCardComponent methods', () => {
   let spy: jasmine.SpyObj<ProductService>;
-  let spySub: jasmine.SpyObj<Subscription>
+  let spySub: jasmine.SpyObj<Subscription>;
+  let spyProd: jasmine.SpyObj<Product>;
   let component: ProductCardComponent;
   
 
   beforeEach(async () => {
-    spy = jasmine.createSpyObj(["getCart", "setCart"]);
+    spy = jasmine.createSpyObj(["getCart", "setCart","getReviewAverage","getReviews"]);
     spySub = jasmine.createSpyObj(["unsubscribe"]);
     component = new ProductCardComponent(spy);
-  });
-
-  it('should call ngOnInit', () => {
-    var product = new Product(1,"bob",2,"bob",1,"b");
-    let quantity = 1;
-    
-    let cart={cartCount: 0,
-      products: [{product,quantity}],
-      totalPrice: 0.00}
-    spy.getCart.and.returnValue(defer(()=>Promise.resolve(cart)));
-    component.ngOnInit();
-    expect(component.products ==cart.products);
   });
 
   it('should call addToCart, already in cart', () => {

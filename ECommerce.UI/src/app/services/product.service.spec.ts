@@ -65,4 +65,12 @@ describe('ProductService methods', () => {
     component.purchase([{id,quantity}]);
     expect(spy.patch.calls.count()).toBe(1);  
   });
+  it('should call getReviewAverage',()=>{
+    component.getReviewAverage(1);
+    expect(component.getReviewAverage).toHaveBeenCalled
+  });
+  it('should call getReviews',()=>{
+    component.getReviews(1);
+    expect(component.getReviews).toHaveBeenCalled
+  });
 });

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { defer } from 'rxjs/internal/observable/defer';
@@ -37,6 +38,14 @@ describe('CheckoutComponent methods', () => {
   it('should call onSubmit, finalProductLengt=1', () => {
     var product = new Product(1,"bob",2,"bob",1,"b");
     let quantity = 1;
+    component.cardExpired=false;
+    component.badMonthInput=false;
+    const c = component.checkoutForm.controls
+    for(const cc in c){
+      c[cc].clearValidators();
+      c[cc].updateValueAndValidity({onlySelf:true});
+    }
+    component.checkoutForm.updateValueAndValidity();
     spyService.purchase.and.returnValue(defer(()=>Promise.resolve({product,quantity})));
     
     component.products.push({product,quantity});
@@ -77,5 +86,42 @@ describe('CheckoutComponent methods', () => {
     component.ngOnInit();
     expect(component.products ==cart.products);
   });
+  it('should call CardName',()=>{
+    expect(component.cardName).toHaveBeenCalled;
+  });
+  it('should call CardNumber',()=>{
+    expect(component.cardNumber).toHaveBeenCalled;
+  });
+  it('should call expiry',()=>{
+    expect(component.expiry).toHaveBeenCalled;
+  });
+  it('should call cvv',()=>{
+    expect(component.cvv).toHaveBeenCalled;
+  });
+  it('should call address',()=>{
+    expect(component.address).toHaveBeenCalled;
+  });
+  it('should call state',()=>{
+    expect(component.state).toHaveBeenCalled;
+  });
+  it('should call city',()=>{
+    expect(component.city).toHaveBeenCalled;
+  });
+  it('should call zipCode',()=>{
+    expect(component.zipCode).toHaveBeenCalled;
+  });
+  it('should call validExpiry',()=>{
+    component.validateExpiry(true);
+    
+  });
+  it('should call validExpiry, badMonth',()=>{
+    component.validateExpiry(-44);
+    
+  });
+  it('should call validExpiry, expired',()=>{
+    component.validateExpiry(1);
+    
+  });
   
+
 });

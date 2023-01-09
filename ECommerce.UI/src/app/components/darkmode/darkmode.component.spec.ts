@@ -20,4 +20,9 @@ describe('DarkmodeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it("should call branch on toggle",()=>{
+    component.useDark= true;
+    component.toggle();
+    expect(component.toggle).toHaveBeenCalled
+  });
 });

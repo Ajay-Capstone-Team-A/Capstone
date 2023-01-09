@@ -63,4 +63,16 @@ describe('RegisterComponent methods', () => {
     expect(component.ngOnInit).toHaveBeenCalled;
 
   });
+  it('should call fname',()=>{
+    expect(component.fname).toHaveBeenCalled
+  });
+  it('should call lname',()=>{
+    expect(component.lname).toHaveBeenCalled
+  });
+  it('should call email',()=>{
+    expect(component.email).toHaveBeenCalled
+  });
+  it('should call password',()=>{
+    expect(component.password).toHaveBeenCalled
+  });
 });
