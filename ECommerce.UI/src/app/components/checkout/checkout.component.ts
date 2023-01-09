@@ -27,7 +27,7 @@ export class CheckoutComponent implements OnInit {
     cardNumber: new UntypedFormControl('', [Validators.required, Validators.pattern("^[0-9]{16}$")]),
     expiry: new UntypedFormControl('', [Validators.required, Validators.pattern("^[0-9]{4}$")]),
     cvv: new UntypedFormControl('', [Validators.required,Validators.pattern("^[0-9]{3}$")]),
-    address: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
+    address: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]*$')]),
     city: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     state: new UntypedFormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
     zipCode: new UntypedFormControl('', [Validators.required, Validators.pattern("^[0-9]{5}$")]),
