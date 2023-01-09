@@ -18,12 +18,12 @@ export class PostReviewComponent implements OnInit {
   @Output()
   addReviewEvent = new EventEmitter<string>();
 
-  ratingFlag = false;
+
   currentUserId!: number;
 
   postReviewForm = new FormGroup({
     comment: new FormControl(''),
-    rating: new FormControl('', [Validators.required])
+    rating: new FormControl('', [Validators.required, Validators.pattern("^[1-5]{1}$")])
   })
 
   
@@ -36,8 +36,8 @@ export class PostReviewComponent implements OnInit {
 
   onSubmit() {
     this.currentUserId = this.CurrentUserService.getUser().userId;
-    this.ratingCheck(Number(this.postReviewForm.value.rating!));
-    if (!this.ratingFlag) {
+
+    if (!this.postReviewForm.invalid) {
       this.reviewService.postReview(this.currentUserId, this.productId, this.postReviewForm.value.comment!, Number(this.postReviewForm.value.rating!)).subscribe(
         () => {
           console.log("Review Posted")
@@ -49,12 +49,6 @@ export class PostReviewComponent implements OnInit {
 }
   }
 
-  ratingCheck(input:number) {
-    if (input <= 0 || input >= 6)
-      this.ratingFlag = true;
-    else
-    this.ratingFlag = false;
-  }
   get comment() {
     return this.postReviewForm.get('comment');
   }
