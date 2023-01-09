@@ -16,6 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { FilterPipe } from './components/display-products/filter.pipe';
 import { UserReviewComponent } from './components/user-review/user-review.component';
 import { PostReviewComponent } from './components/post-review/post-review.component';
+import { DarkmodeComponent } from './components/darkmode/darkmode.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PostReviewComponent } from './components/post-review/post-review.compon
     ProfileComponent,
     FilterPipe,
     UserReviewComponent,
-    PostReviewComponent
+    PostReviewComponent,
+    DarkmodeComponent
   ],
   imports: [
     BrowserModule,
