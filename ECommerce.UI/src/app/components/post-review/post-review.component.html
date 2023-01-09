@@ -1,0 +1,14 @@
+
+<form [formGroup]="postReviewForm" (ngSubmit)="onSubmit();">
+  <label>Rating: (1-5)</label>
+  <input formControlName="rating" type="number" />
+  <div *ngIf="postReviewForm.controls['rating'].errors?.required  && (rating?.dirty || rating?.touched)" class="error">
+    Please provide a rating
+  </div>
+  <div *ngIf="ratingFlag" class="error">
+    Rating should be 1-5
+  </div>
+  <label>Comments: </label>
+  <input formControlName="comment" type="text" />
+  <button type="submit" class="btn submit">Submit</button>
+</form>

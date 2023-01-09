@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FilterPipe } from './components/display-products/filter.pipe';
+import { UserReviewComponent } from './components/user-review/user-review.component';
+import { PostReviewComponent } from './components/post-review/post-review.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { FilterPipe } from './components/display-products/filter.pipe';
     CheckoutComponent,
     DisplayProductsComponent,
     ProfileComponent,
-    FilterPipe
+    FilterPipe,
+    UserReviewComponent,
+    PostReviewComponent
   ],
   imports: [
     BrowserModule,
