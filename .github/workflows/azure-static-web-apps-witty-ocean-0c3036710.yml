@@ -31,6 +31,17 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "dist/e-commerce" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+      - script: ng test --no-watch --karma-config karma.pipeline.conf.js
+        displayName: 'Run Unit Tests'
+
+          - task: PublishTestResults@2
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/tests.xml'
+            displayName: 'Publish Unit Test Results'
+
+
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
