@@ -56,7 +56,18 @@
       [ProductImage] NVARCHAR(255)
    );
    GO
-
+   
+   CREATE TABLE [ecd].[Reviews] (
+    [ReviewId] INT IDENTITY(1,1) NOT NULL,
+    [UserId] INT NOT NULL,
+    [ProductId] INT NOT NULL,
+    [Comment] VARCHAR(255),
+    [Rating] INT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES ecd.Users(UserId),
+    FOREIGN KEY (ProductId) REFERENCES ecd.Products(ProductId)
+)
+GO;
+   
 /*******************************************************************************
    Create Primary Key References
 ********************************************************************************/
@@ -91,3 +102,14 @@
          ('Garuda Arch Linux OS', 999, 0.0, 'Yeah, it''s a free OS. Yes, it''s real. Yes, you should check it out.', 'https://www.addictivetips.com/app/uploads/2021/11/garuda-desktop-installer.png'),
          ('Corsair K70 Mk II', 6, 240.00, 'High sensitivity keyboard for gamers and professionals alike.', 'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6491/6491897_sd.jpg);
    GO
+   
+   INSERT INTO [ecd].[Reviews] ([UserId],[ProductId],[Comment],[Rating]) 
+      VALUES
+         (2,1,'Little too minty',4);
+         (1,1,'Very minty',5);
+         (4,3,'Pretty reliable laptop',4);
+         (3,4,'Cant complain, its free',5);
+         (1,5,'Very reliable keyboard',5);
+         (2,2,'Way too overpriced',2);
+    GO
+         
