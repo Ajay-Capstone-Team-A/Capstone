@@ -4,7 +4,7 @@
     <label for="inputFirstName">First Name</label>
     <input type="text" class="form-control" formControlName="fname" id="inputFirstName" placeholder="Enter First Name">
 
-    <div *ngIf="fname && fname.invalid &&fname.touched">
+    <div *ngIf="fname && fname.invalid &&fname.touched" class="error">
       Please only use letters in your first name
     </div>
 
@@ -12,7 +12,7 @@
     <div class="form-group">
       <label for="inputLastName">Last Name</label>
       <input type="text" class="form-control" formControlName="lname" id="inputLastName" placeholder="Enter Last Name">
-      <div *ngIf="lname && lname.invalid && lname.touched">
+      <div *ngIf="lname && lname.invalid && lname.touched" class="error">
         Please only use letters in your last name
       </div>
     </div>
@@ -22,15 +22,15 @@
       <small id="emailHelp" class="form-text text-muted">Ensure you enter the correct email</small>
 
       <div *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
-        <div *ngIf="registerForm.controls['email'].errors?.required">
+        <div *ngIf="registerForm.controls['email'].errors?.required" class="error">
           Please enter an email
         </div>
-        <div *ngIf="registerForm.controls['email'].errors?.email">
+        <div *ngIf="registerForm.controls['email'].errors?.email" class="error">
           Please enter a valid email address
         </div>
       </div>
 
-      <div *ngIf="emailTaken">
+      <div *ngIf="emailTaken" class="error">
         Email is taken, please try another
       </div>
 
@@ -40,7 +40,7 @@
       <input type="password" class="form-control" formControlName="password" id="inputPassword" placeholder="Enter Password">
 
       <div *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
-        <div *ngIf="registerForm.controls['password'].errors?.required">
+        <div *ngIf="registerForm.controls['password'].errors?.required" class="error">
           Please enter a password
         </div>
       </div>
