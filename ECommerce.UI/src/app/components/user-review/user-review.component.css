@@ -1,3 +1,8 @@
-.review{
-    border:dotted;
+.review {
+  border: solid;
+  margin-bottom:10px;
+}
+
+.text{
+    margin:5px;
 }

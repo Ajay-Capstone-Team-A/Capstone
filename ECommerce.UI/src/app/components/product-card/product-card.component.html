@@ -22,14 +22,16 @@
       <!-- <input type="number" class="form-control " [(ngModel)="quantity"]> -->
         <button class="btn btn-outline-success" (click)="addToCart(productInfo, quantity)">Add to Cart</button>
     </div>
-    <div >
-      Reviews
+    <div class="card-body">
+      <h5 class="card-title">Reviews</h5>
       <app-user-review *ngFor="let review of reviews"
-                       [reviewInfo]="review"
-                       ></app-user-review>
+                       [reviewInfo]="review"></app-user-review>
+      <div>
+        <h5 class="card-title">
+          Leave a review
+        </h5>
+        <app-post-review [productId]="productInfo.productId" (addReviewEvent)="addReview($event)"></app-post-review>
+      </div>
     </div>
-  <div>
-    Leave a review
-    <app-post-review [productId]="productInfo.productId"  (addReviewEvent)="addReview($event)"></app-post-review>
-  </div>
+
   </div>
